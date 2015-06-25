@@ -57,7 +57,7 @@ public class MyListAdapter extends BaseAdapter {
         TextView view = (TextView) convertView;
         if (view == null) {
             view = (TextView) inflater.inflate(R.layout.list_row, null);
-            translateInAnimation(parent, view);
+            translateInAnimation(parent, view, position*100);
             viewList.add(view);
             mParent = parent;
 
@@ -79,11 +79,12 @@ public class MyListAdapter extends BaseAdapter {
 
 
 
-    public void translateInAnimation(final ViewGroup parent, final View view) {
+    public void translateInAnimation(final ViewGroup parent, final View view,  int delay) {
         Interpolator interpolator = new AnimationUtils().loadInterpolator(mContext, android.R.interpolator.linear);
         Animator animator = ObjectAnimator.ofFloat(view, TRANSLATION_X,  0 - parent.getWidth(), 0);
         animator.setDuration(300);
         animator.setInterpolator(interpolator);
+        animator.setStartDelay(delay);
         animator.start();
 
     }
