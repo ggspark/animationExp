@@ -57,20 +57,20 @@ public class MyListAdapter extends BaseAdapter {
         TextView view = (TextView) convertView;
         if (view == null) {
             view = (TextView) inflater.inflate(R.layout.list_row, null);
+            translateInAnimation(parent, view);
+            viewList.add(view);
+            mParent = parent;
 
         }
 
         view.setText(list.get(position));
-        translateInAnimation(parent, view);
-        viewList.add(view);
-        mParent = parent;
 
         return view;
     }
 
     public void retractViews(){
         int i =0;
-        while (!viewList.isEmpty() && mParent !=null){
+        while (viewList.size()>2 && mParent !=null){
             translateOutAnimation(mParent, viewList.remove(viewList.size()-1), i*100);
             i++;
 
