@@ -3,4 +3,31 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string-array name="item_names">
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+        <item>Hello1</item>
+        <item>Hello2</item>
+    </string-array>
+
 </resources>

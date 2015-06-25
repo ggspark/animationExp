@@ -1,17 +1,38 @@
 package com.example.gaurav.animationapp;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+import java.util.Arrays;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
+
+    private ListView mListView;
+    private MyListAdapter mAdapter;
+    private ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        backButton = (ImageView) findViewById(R.id.back_button);
+        mAdapter = new MyListAdapter(this, Arrays.asList(getResources().getStringArray(R.array.item_names)));
+        mListView = (ListView) findViewById(R.id.activity_mylist_listview);
+        mListView.setAdapter(mAdapter);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAdapter.retractViews();
+            }
+        });
+
     }
 
     @Override
