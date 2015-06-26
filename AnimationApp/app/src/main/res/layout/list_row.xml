@@ -10,4 +10,4 @@
     android:padding="10dp"
     android:textColor="?android:attr/textColorSecondary"
     android:textSize="20sp"
-    tools:ignore="UnusedAttribute" />
+    tools:ignore="UnusedAttribute"/>

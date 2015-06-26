@@ -68,31 +68,30 @@ public class MyListAdapter extends BaseAdapter {
     }
 
     //Function to slide the views from right to left and bottom to top
-    public void retractViews(){
-        int i =0;
-        int j = viewList.size()-1;
-        while (j>2 && mParent !=null){
-            translateOutAnimation(mParent, viewList.get(j), i*100);
+    public void retractViews() {
+        int i = 0;
+        int j = viewList.size() - 1;
+        while (j > 2 && mParent != null) {
+            translateOutAnimation(mParent, viewList.get(j), i * 100);
             i++;
             j--;
         }
     }
 
     //Function to slide the views from left to right and top to bottom
-    public void expandViews(){
-        int i =2;
-        while (i<viewList.size() && mParent !=null ){
-            translateInAnimation(mParent, viewList.get(i), i*100);
+    public void expandViews() {
+        int i = 2;
+        while (i < viewList.size() && mParent != null) {
+            translateInAnimation(mParent, viewList.get(i), i * 100);
             i++;
         }
     }
 
 
-
     //Animation to slide in from left to right
-    public void translateInAnimation(final ViewGroup parent, final View view,  int delay) {
+    public void translateInAnimation(final ViewGroup parent, final View view, int delay) {
         Interpolator interpolator = new AnimationUtils().loadInterpolator(mContext, android.R.interpolator.linear);
-        Animator animator = ObjectAnimator.ofFloat(view, TRANSLATION_X,  0 - parent.getWidth(), 0);
+        Animator animator = ObjectAnimator.ofFloat(view, TRANSLATION_X, 0 - parent.getWidth(), 0);
         animator.setDuration(300); // time in ms
         animator.setInterpolator(interpolator);
         animator.setStartDelay(delay);

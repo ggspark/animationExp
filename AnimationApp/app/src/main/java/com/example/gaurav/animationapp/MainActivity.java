@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
     private ImageView upButton;
     private View root;
     private RelativeLayout listContainer;
-    private boolean retracted= false;
+    private boolean retracted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class MainActivity extends Activity {
 
     //Animate the drawer down to 4 list view items
     private void animateDown() {
-        DropDownAnim scale = new DropDownAnim(listContainer,convertDpToPixel(58 * 4, this), true );
+        DropDownAnim scale = new DropDownAnim(listContainer, convertDpToPixel(58 * 4, this), true);
         scale.setFillAfter(false);
         scale.setDuration(600);
         scale.setStartOffset(100);
@@ -107,7 +107,7 @@ public class MainActivity extends Activity {
 
     //Animate the drawer up to 4 list view items
     private void animateUp() {
-        DropDownAnim scale = new DropDownAnim(listContainer,convertDpToPixel(58 * 4, this), false );
+        DropDownAnim scale = new DropDownAnim(listContainer, convertDpToPixel(58 * 4, this), false);
         scale.setFillAfter(false);
         scale.setDuration(400);
         scale.setAnimationListener(new Animation.AnimationListener() {
@@ -132,15 +132,14 @@ public class MainActivity extends Activity {
     //To close or open the drawer permanently
     private void openCloseDrawer(boolean open) {
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) listContainer.getLayoutParams();
-        if (open){
+        if (open) {
             layoutParams.height = convertDpToPixel(58 * 6, this);
-        }else {
+        } else {
             layoutParams.height = convertDpToPixel(58 * 2, this);
         }
         listContainer.setLayoutParams(layoutParams);
         root.invalidate();
     }
-
 
 
     //Convert dp to pixel
@@ -169,7 +168,7 @@ public class MainActivity extends Activity {
         protected void applyTransformation(float interpolatedTime, Transformation t) {
             int newHeight;
             if (down) {
-                newHeight = convertDpToPixel(58 * 2, MainActivity.this) +  (int) (targetHeight * interpolatedTime);
+                newHeight = convertDpToPixel(58 * 2, MainActivity.this) + (int) (targetHeight * interpolatedTime);
             } else {
                 newHeight = convertDpToPixel(58 * 2, MainActivity.this) + (int) (targetHeight * (1 - interpolatedTime));
             }
