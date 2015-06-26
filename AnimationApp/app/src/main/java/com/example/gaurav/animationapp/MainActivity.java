@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
     private ListView mListView;
     private MyListAdapter mAdapter;
     private ImageView backButton;
+    private ImageView upButton;
     private View root;
     private RelativeLayout listContainer;
     private boolean retracted= false;
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         listContainer = (RelativeLayout) findViewById(R.id.list_container);
         backButton = (ImageView) findViewById(R.id.back_button);
+        upButton = (ImageView) findViewById(R.id.up_button);
         mAdapter = new MyListAdapter(this, Arrays.asList(getResources().getStringArray(R.array.item_names)));
         mListView = (ListView) findViewById(R.id.activity_mylist_listview);
         root = findViewById(R.id.root);
@@ -41,26 +43,41 @@ public class MainActivity extends Activity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (retracted) {
-                    retracted = false;
-                    animateDown();
-                    mAdapter.expandViews();
-                }
+                expand();
 
+            }
+        });
+
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expand();
             }
         });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!retracted) {
-                    retracted = true;
-                    mAdapter.retractViews();
-                    animateUp();
-                }
+                retract();
             }
         });
 
+    }
+
+    private void retract() {
+        if (!retracted) {
+            retracted = true;
+            mAdapter.retractViews();
+            animateUp();
+        }
+    }
+
+    private void expand() {
+        if (retracted) {
+            retracted = false;
+            animateDown();
+            mAdapter.expandViews();
+        }
     }
 
     //0 percent is full open and 100 percent is full close

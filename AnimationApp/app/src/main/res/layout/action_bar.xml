@@ -25,9 +25,10 @@
         android:textColor="@android:color/white"/>
 
     <ImageView
+        android:id="@+id/up_button"
         android:layout_width="60dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:padding="15dp"
-        android:src="@drawable/ic_navigation_white_24dp"/>
+        android:padding="5dp"
+        android:src="@drawable/ic_chevron_right_white_24dp"/>
 </RelativeLayout>
