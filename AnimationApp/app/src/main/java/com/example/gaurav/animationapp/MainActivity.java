@@ -8,6 +8,8 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,7 +26,7 @@ public class MainActivity extends Activity {
     private View root;
     private RelativeLayout listContainer;
     private int listFullHeight;
-    private boolean retracted= false;
+    private boolean retracted= true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +38,13 @@ public class MainActivity extends Activity {
         mListView = (ListView) findViewById(R.id.activity_mylist_listview);
         root = findViewById(R.id.root);
         mListView.setAdapter(mAdapter);
-        openCloseDrawer(true);
+        openCloseDrawer(false);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(retracted) {
+                if (retracted) {
                     retracted = false;
-                    openCloseDrawer(true);
+                    animateDown();
                     mAdapter = new MyListAdapter(MainActivity.this, Arrays.asList(getResources().getStringArray(R.array.item_names)));
                     mListView.setAdapter(mAdapter);
                 }
@@ -53,10 +55,10 @@ public class MainActivity extends Activity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!retracted) {
+                if (!retracted) {
                     retracted = true;
                     mAdapter.retractViews();
-                    openCloseDrawer(false);
+                    animateUp();
                 }
             }
         });
@@ -74,6 +76,8 @@ public class MainActivity extends Activity {
         listContainer.setLayoutParams(layoutParams);
         root.invalidate();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -104,6 +108,88 @@ public class MainActivity extends Activity {
         int px = (int) (dp * (metrics.densityDpi / 160f));
         return px;
 
+    }
+
+    private void animateDown() {
+        DropDownAnim scale = new DropDownAnim(listContainer,convertDpToPixel(58 * 4, this), true );
+        scale.setFillAfter(false);
+        scale.setDuration(400);
+        scale.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                openCloseDrawer(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        listContainer.startAnimation(scale);
+    }
+
+    private void animateUp() {
+        DropDownAnim scale = new DropDownAnim(listContainer,convertDpToPixel(58 * 4, this), false );
+        scale.setFillAfter(false);
+        scale.setDuration(400);
+        scale.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                openCloseDrawer(false);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        listContainer.startAnimation(scale);
+    }
+
+
+    class DropDownAnim extends Animation {
+        private final int targetHeight;
+        private final View view;
+        private final boolean down;
+
+        public DropDownAnim(View view, int targetHeight, boolean down) {
+            this.view = view;
+            this.targetHeight = targetHeight;
+            this.down = down;
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            int newHeight;
+            if (down) {
+                newHeight = convertDpToPixel(58 * 2, MainActivity.this) +  (int) (targetHeight * interpolatedTime);
+            } else {
+                newHeight = convertDpToPixel(58 * 2, MainActivity.this) + (int) (targetHeight * (1 - interpolatedTime));
+            }
+            view.getLayoutParams().height = newHeight;
+            view.requestLayout();
+        }
+
+        @Override
+        public void initialize(int width, int height, int parentWidth,
+                               int parentHeight) {
+            super.initialize(width, height, parentWidth, parentHeight);
+        }
+
+        @Override
+        public boolean willChangeBounds() {
+            return true;
+        }
     }
 
 }
