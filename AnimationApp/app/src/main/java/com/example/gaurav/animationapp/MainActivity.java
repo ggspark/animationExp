@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -64,6 +62,7 @@ public class MainActivity extends Activity {
 
     }
 
+    //Function to retract the drawer
     private void retract() {
         if (!retracted) {
             retracted = true;
@@ -72,6 +71,7 @@ public class MainActivity extends Activity {
         }
     }
 
+    //Function to expand the drawer
     private void expand() {
         if (retracted) {
             retracted = false;
@@ -80,51 +80,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    //0 percent is full open and 100 percent is full close
-    private void openCloseDrawer(boolean open) {
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) listContainer.getLayoutParams();
-        if (open){
-            layoutParams.height = convertDpToPixel(58 * 6, this);
-        }else {
-            layoutParams.height = convertDpToPixel(58 * 2, this);
-        }
-        listContainer.setLayoutParams(layoutParams);
-        root.invalidate();
-    }
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public static int convertDpToPixel(float dp, Context context) {
-
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        int px = (int) (dp * (metrics.densityDpi / 160f));
-        return px;
-
-    }
-
+    //Animate the drawer down to 4 list view items
     private void animateDown() {
         DropDownAnim scale = new DropDownAnim(listContainer,convertDpToPixel(58 * 4, this), true );
         scale.setFillAfter(false);
@@ -149,6 +105,7 @@ public class MainActivity extends Activity {
         listContainer.startAnimation(scale);
     }
 
+    //Animate the drawer up to 4 list view items
     private void animateUp() {
         DropDownAnim scale = new DropDownAnim(listContainer,convertDpToPixel(58 * 4, this), false );
         scale.setFillAfter(false);
@@ -172,7 +129,31 @@ public class MainActivity extends Activity {
         listContainer.startAnimation(scale);
     }
 
+    //To close or open the drawer permanently
+    private void openCloseDrawer(boolean open) {
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) listContainer.getLayoutParams();
+        if (open){
+            layoutParams.height = convertDpToPixel(58 * 6, this);
+        }else {
+            layoutParams.height = convertDpToPixel(58 * 2, this);
+        }
+        listContainer.setLayoutParams(layoutParams);
+        root.invalidate();
+    }
 
+
+
+    //Convert dp to pixel
+    public static int convertDpToPixel(float dp, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        int px = (int) (dp * (metrics.densityDpi / 160f));
+        return px;
+
+    }
+
+
+    //Translate animation to expand or collapse the drawer
     class DropDownAnim extends Animation {
         private final int targetHeight;
         private final View view;

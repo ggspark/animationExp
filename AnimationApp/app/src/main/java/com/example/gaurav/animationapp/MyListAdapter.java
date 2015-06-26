@@ -24,8 +24,8 @@ public class MyListAdapter extends BaseAdapter {
 
     private static final String TRANSLATION_X = "translationX";
     public List<String> list;
-    public static List<View> viewList;
-    private ViewGroup mParent;
+    public static List<View> viewList; //List to keep current views of the list view
+    private ViewGroup mParent; // List to keep the parent of the views
     private LayoutInflater inflater;
     private final Context mContext;
 
@@ -67,6 +67,7 @@ public class MyListAdapter extends BaseAdapter {
         return view;
     }
 
+    //Function to slide the views from right to left and bottom to top
     public void retractViews(){
         int i =0;
         int j = viewList.size()-1;
@@ -77,6 +78,7 @@ public class MyListAdapter extends BaseAdapter {
         }
     }
 
+    //Function to slide the views from left to right and top to bottom
     public void expandViews(){
         int i =2;
         while (i<viewList.size() && mParent !=null ){
@@ -87,10 +89,11 @@ public class MyListAdapter extends BaseAdapter {
 
 
 
+    //Animation to slide in from left to right
     public void translateInAnimation(final ViewGroup parent, final View view,  int delay) {
         Interpolator interpolator = new AnimationUtils().loadInterpolator(mContext, android.R.interpolator.linear);
         Animator animator = ObjectAnimator.ofFloat(view, TRANSLATION_X,  0 - parent.getWidth(), 0);
-        animator.setDuration(300);
+        animator.setDuration(300); // time in ms
         animator.setInterpolator(interpolator);
         animator.setStartDelay(delay);
         animator.start();
@@ -98,10 +101,11 @@ public class MyListAdapter extends BaseAdapter {
     }
 
 
+    //Animation to slide out from right to left
     public void translateOutAnimation(final ViewGroup parent, final View view, int delay) {
         Interpolator interpolator = new AnimationUtils().loadInterpolator(mContext, android.R.interpolator.linear);
         Animator animator = ObjectAnimator.ofFloat(view, TRANSLATION_X, 0, 0 - parent.getWidth());
-        animator.setDuration(300);
+        animator.setDuration(300); // time in ms
         animator.setInterpolator(interpolator);
         animator.setStartDelay(delay);
         animator.start();
