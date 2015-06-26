@@ -25,8 +25,7 @@ public class MainActivity extends Activity {
     private ImageView backButton;
     private View root;
     private RelativeLayout listContainer;
-    private int listFullHeight;
-    private boolean retracted= true;
+    private boolean retracted= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class MainActivity extends Activity {
         mListView = (ListView) findViewById(R.id.activity_mylist_listview);
         root = findViewById(R.id.root);
         mListView.setAdapter(mAdapter);
-        openCloseDrawer(false);
+        openCloseDrawer(true);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -112,7 +111,8 @@ public class MainActivity extends Activity {
     private void animateDown() {
         DropDownAnim scale = new DropDownAnim(listContainer,convertDpToPixel(58 * 4, this), true );
         scale.setFillAfter(false);
-        scale.setDuration(400);
+        scale.setDuration(600);
+        scale.setStartOffset(100);
         scale.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

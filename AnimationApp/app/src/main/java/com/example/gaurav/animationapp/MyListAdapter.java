@@ -74,16 +74,14 @@ public class MyListAdapter extends BaseAdapter {
             translateOutAnimation(mParent, viewList.get(j), i*100);
             i++;
             j--;
-
         }
     }
 
     public void expandViews(){
-        int i =0;
+        int i =2;
         while (i<viewList.size() && mParent !=null ){
             translateInAnimation(mParent, viewList.get(i), i*100);
             i++;
-
         }
     }
 
