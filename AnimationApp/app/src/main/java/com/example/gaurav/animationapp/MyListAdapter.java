@@ -24,7 +24,7 @@ public class MyListAdapter extends BaseAdapter {
 
     private static final String TRANSLATION_X = "translationX";
     public List<String> list;
-    public List<View> viewList;
+    public static List<View> viewList;
     private ViewGroup mParent;
     private LayoutInflater inflater;
     private final Context mContext;
@@ -57,7 +57,6 @@ public class MyListAdapter extends BaseAdapter {
         TextView view = (TextView) convertView;
         if (view == null) {
             view = (TextView) inflater.inflate(R.layout.list_row, null);
-            translateInAnimation(parent, view, position*100);
             viewList.add(view);
             mParent = parent;
 
@@ -70,8 +69,19 @@ public class MyListAdapter extends BaseAdapter {
 
     public void retractViews(){
         int i =0;
-        while (viewList.size()>2 && mParent !=null){
-            translateOutAnimation(mParent, viewList.remove(viewList.size()-1), i*100);
+        int j = viewList.size()-1;
+        while (j>2 && mParent !=null){
+            translateOutAnimation(mParent, viewList.get(j), i*100);
+            i++;
+            j--;
+
+        }
+    }
+
+    public void expandViews(){
+        int i =0;
+        while (i<viewList.size() && mParent !=null ){
+            translateInAnimation(mParent, viewList.get(i), i*100);
             i++;
 
         }

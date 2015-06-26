@@ -45,8 +45,7 @@ public class MainActivity extends Activity {
                 if (retracted) {
                     retracted = false;
                     animateDown();
-                    mAdapter = new MyListAdapter(MainActivity.this, Arrays.asList(getResources().getStringArray(R.array.item_names)));
-                    mListView.setAdapter(mAdapter);
+                    mAdapter.expandViews();
                 }
 
             }
